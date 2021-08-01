@@ -1,2 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <!-- Margins-->
+    <dimen name="small_margin">8dp</dimen>
+    <dimen name="middle_margin">16dp</dimen>
+    <dimen name="large_margin">24dp</dimen>
+    <dimen name="extra_large_margin">32dp</dimen>
+
+    <!--Card View-->
+    <dimen name="card_view_radius">8dp</dimen>
+
+    <!--View Height-->
+    <dimen name="view_small_height">3dp</dimen>
+
+    <!--Recycler View Height-->
+    <dimen name="recycler_view_height">300dp</dimen>
+
+    <!--Image View Size-->
+    <dimen name="image_view_size">100dp</dimen>
+</resources>

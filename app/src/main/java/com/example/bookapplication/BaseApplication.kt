@@ -1,8 +1,9 @@
 package com.example.bookapplication
 
 import android.app.Application
-import com.example.bookapplication.koin.modules.createFreeCatalogModule
-import com.example.bookapplication.koin.modules.createPaidCatalogModule
+import com.example.bookapplication.fragment.modules.createBookDetailsModule
+import com.example.bookapplication.fragment.modules.createBooksCatalogModule
+import com.example.bookapplication.fragment.modules.retrofitModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.component.KoinComponent
@@ -22,8 +23,9 @@ class BaseApplication : KoinComponent, Application() {
 
     private fun createModules(): List<Module> {
         val modules = arrayListOf<Module>()
-        modules.addAll(createFreeCatalogModule())
-        modules.addAll(createPaidCatalogModule())
+        modules.addAll(createBooksCatalogModule())
+        modules.addAll(createBookDetailsModule())
+        modules.addAll(retrofitModule())
         return modules
     }
 
