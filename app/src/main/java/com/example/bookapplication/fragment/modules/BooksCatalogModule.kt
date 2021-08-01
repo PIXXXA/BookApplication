@@ -9,7 +9,7 @@ import org.koin.dsl.module
 fun createBooksCatalogModule(): List<Module> {
 
     val viewModel = module {
-        viewModel { BooksCatalogViewModel(IServiceApi(get()), get()) }
+        viewModel { BooksCatalogViewModel(get(), get()) }
     }
     return arrayListOf(viewModel)
 }

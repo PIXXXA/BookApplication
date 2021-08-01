@@ -8,7 +8,7 @@ import retrofit2.http.Query
 
 interface IServiceApi {
 
-    @GET(value = "/volumes")
+    @GET(value = "volumes")
     suspend fun searchTheBook(@Query(value = "q") q: String): BooksCatalogModel
 
     @GET(value = "/volumes/{volumeId}")
