@@ -1,9 +1,9 @@
 package com.example.bookapplication
 
 import android.app.Application
-import com.example.bookapplication.fragment.modules.createBookDetailsModule
-import com.example.bookapplication.fragment.modules.createBooksCatalogModule
-import com.example.bookapplication.fragment.modules.retrofitModule
+import com.example.bookapplication.modules.createBookDetailsModule
+import com.example.bookapplication.modules.createBooksCatalogModule
+import com.example.bookapplication.modules.retrofitModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.component.KoinComponent

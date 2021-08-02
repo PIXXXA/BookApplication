@@ -16,5 +16,5 @@
     <dimen name="recycler_view_height">300dp</dimen>
 
     <!--Image View Size-->
-    <dimen name="image_view_size">100dp</dimen>
+    <dimen name="image_view_size">150dp</dimen>
 </resources>
