@@ -1,0 +1,10 @@
+package com.example.bookapplication.models.catalogmodel
+
+import com.google.gson.annotations.SerializedName
+
+data class PanelizationSummary(
+    @SerializedName("containsEpubBubbles")
+    val containsEpubBubbles: Boolean,
+    @SerializedName("containsImageBubbles")
+    val containsImageBubbles: Boolean
+)

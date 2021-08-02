@@ -7,13 +7,23 @@
 
         <variable
             name="viewModel"
-            type="com.example.bookapplication.fragment.catalog.BooksCatalogViewModel" />
+            type="com.example.bookapplication.views.fragment.catalog.BooksCatalogViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragment.catalog.BooksCatalogFragment">
+        tools:context=".views.fragment.catalog.BooksCatalogFragment">
+
+        <ProgressBar
+            android:id="@+id/catalog_progress_bar"
+            android:layout_width="@dimen/image_view_size"
+            android:layout_height="@dimen/image_view_size"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/left_guideline"
@@ -91,9 +101,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/middle_margin"
+            android:text="@string/free_books_title"
             app:layout_constraintStart_toStartOf="@id/left_guideline"
-            app:layout_constraintTop_toBottomOf="@+id/search_card_view"
-            tools:text="asdfasdfasdfasdfasdf" />
+            app:layout_constraintTop_toBottomOf="@+id/search_card_view" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/free_book_recycler_view"
@@ -121,10 +131,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small_margin"
+            android:text="@string/paid_books_title"
             app:layout_constraintBottom_toTopOf="@id/paid_books_recycler_view"
             app:layout_constraintStart_toStartOf="@id/left_guideline"
-            app:layout_constraintTop_toBottomOf="@+id/books_divider"
-            tools:text="asdfasdfasdfsadfasdf" />
+            app:layout_constraintTop_toBottomOf="@+id/books_divider" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/paid_books_recycler_view"
