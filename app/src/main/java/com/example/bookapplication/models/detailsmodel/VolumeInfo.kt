@@ -20,5 +20,6 @@ data class VolumeInfo(
     val publishedDate: String,
     val publisher: String,
     val readingModes: ReadingModes,
-    val title: String
+    val title: String,
+    val subtitle: String
 )

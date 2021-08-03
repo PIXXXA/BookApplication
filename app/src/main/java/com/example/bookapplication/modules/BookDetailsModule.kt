@@ -8,7 +8,7 @@ import org.koin.dsl.module
 fun createBookDetailsModule(): List<Module> {
 
     val viewModel = module {
-        viewModel { BookDetailsViewModel(get()) }
+        viewModel { BookDetailsViewModel(get(), get()) }
     }
     return arrayListOf(viewModel)
 }

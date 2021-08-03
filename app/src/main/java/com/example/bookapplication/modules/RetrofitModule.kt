@@ -3,6 +3,7 @@ package com.example.bookapplication.modules
 import com.example.bookapplication.BuildConfig.SERVER_URL
 import com.example.bookapplication.restapi.IServiceApi
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.core.module.Module
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -24,10 +25,15 @@ fun retrofitModule(): List<Module> {
     return arrayListOf(module)
 }
 
-private fun okHttp() = OkHttpClient.Builder().build()
+private fun okHttp(): OkHttpClient {
+    val interceptor = HttpLoggingInterceptor()
+    interceptor.level = HttpLoggingInterceptor.Level.BODY
+    return OkHttpClient.Builder().addInterceptor(interceptor).build()
+}
 
 private fun retrofit() = Retrofit.Builder()
-    .addConverterFactory(GsonConverterFactory.create())
-    .callFactory(okHttp())
     .baseUrl(SERVER_URL)
+    .client(okHttp())
+    .callFactory(okHttp())
+    .addConverterFactory(GsonConverterFactory.create())
     .build()

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -31,62 +30,96 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="@dimen/middle_margin" />
+            app:layout_constraintGuide_begin="@dimen/small_margin" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/right_guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_end="@dimen/middle_margin" />
+            app:layout_constraintGuide_end="@dimen/small_margin" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/bottom_guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_end="@dimen/middle_margin" />
+            app:layout_constraintGuide_end="@dimen/small_margin" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/top_guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="@dimen/middle_margin" />
+            app:layout_constraintGuide_begin="@dimen/small_margin" />
 
-        <ImageView
-            android:id="@+id/details_book_view"
-            android:layout_width="@dimen/image_view_size"
-            android:layout_height="@dimen/image_view_size"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/details_container_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toStartOf="@+id/right_guideline"
             app:layout_constraintStart_toStartOf="@id/left_guideline"
-            app:layout_constraintTop_toTopOf="@id/top_guideline" />
+            app:layout_constraintTop_toTopOf="@+id/top_guideline"
+            app:layout_constraintBottom_toTopOf="@id/description_divider">
 
-        <TextView
-            android:id="@+id/book_details_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.title}"
-            app:layout_constraintEnd_toEndOf="@id/right_guideline"
-            app:layout_constraintStart_toEndOf="@id/details_book_view"
-            app:layout_constraintTop_toTopOf="@+id/top_guideline" />
+            <ImageView
+                android:id="@+id/details_book_view"
+                android:layout_width="@dimen/image_view_size"
+                android:layout_height="@dimen/image_view_size"
+                android:contentDescription="@string/book_details_description" />
 
-        <TextView
-            android:id="@+id/book_details_price"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/title_details_container_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/small_margin"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@id/description_divider"
+                app:layout_constraintEnd_toEndOf="@id/right_guideline"
+                app:layout_constraintStart_toEndOf="@id/details_book_view"
+                app:layout_constraintTop_toTopOf="@+id/top_guideline">
+
+                <TextView
+                    android:id="@+id/book_details_title"
+                    style="@style/TitleStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.title}" />
+
+                <TextView
+                    android:id="@+id/book_details_subtitle"
+                    style="@style/TitleStyle.SubTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/middle_margin"
+                    android:text="@{viewModel.subtitle}" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <View
+            android:id="@+id/description_divider"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.price}"
+            android:layout_height="@dimen/view_small_height"
+            android:layout_marginTop="@dimen/small_margin"
+            android:background="@color/black"
+            app:layout_constraintBottom_toTopOf="@id/book_details_description"
             app:layout_constraintEnd_toEndOf="@id/right_guideline"
-            app:layout_constraintStart_toEndOf="@id/details_book_view"
-            app:layout_constraintTop_toBottomOf="@id/book_details_title" />
+            app:layout_constraintStart_toStartOf="@id/left_guideline"
+            app:layout_constraintTop_toBottomOf="@id/details_container_view" />
 
         <TextView
             android:id="@+id/book_details_description"
+            style="@style/TitleStyle.Description"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginTop="@dimen/small_margin"
+            android:scrollbars="vertical"
             android:text="@{viewModel.description}"
             app:layout_constraintBottom_toBottomOf="@id/bottom_guideline"
             app:layout_constraintEnd_toEndOf="@id/right_guideline"
             app:layout_constraintStart_toStartOf="@id/left_guideline"
-            app:layout_constraintTop_toBottomOf="@id/details_book_view" />
+            app:layout_constraintTop_toBottomOf="@+id/description_divider" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

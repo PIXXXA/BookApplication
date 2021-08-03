@@ -15,8 +15,13 @@ import retrofit2.Response
 class BooksCatalogViewModel(private val apiService: IServiceApi) :
     ViewModel(), KoinComponent {
 
-    private val _catalog = MutableLiveData<List<Item>>()
-    val catalog: LiveData<List<Item>> = _catalog
+    private val _catalog = MutableLiveData<List<Item>?>()
+    val catalog: LiveData<List<Item>?> = _catalog
+    val progressState = MutableLiveData<Boolean>()
+
+    init {
+        progressState.value = false
+    }
 
     fun getBooksCatalog(searchText: String) {
         val catalog = apiService.searchTheBook(searchText, FILTER)
@@ -36,8 +41,8 @@ class BooksCatalogViewModel(private val apiService: IServiceApi) :
         })
     }
 
-
     companion object {
+
         const val FILTER = "ebooks"
         const val CATALOG_ERROR = "error"
     }

@@ -1,6 +1,8 @@
 package com.example.bookapplication.views.fragment.bookdetails
 
+import android.content.Context
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +11,9 @@ import androidx.fragment.app.Fragment
 import com.example.bookapplication.R
 import com.example.bookapplication.VOLUME_ID
 import com.example.bookapplication.databinding.FragmentBookDetailsBinding
+import com.squareup.picasso.Picasso
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class BookDetailsFragment : Fragment() {
 
@@ -20,25 +24,30 @@ class BookDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate<FragmentBookDetailsBinding>(
+        binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_book_details, container, false
-        ).apply {
-            lifecycleOwner = this@BookDetailsFragment
-            viewModel = this@BookDetailsFragment.viewModel
-            arguments
-        }
+        )
+        binding.lifecycleOwner = this
+        binding.viewModel = this.viewModel
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getDataFromRequest(savedInstanceState?.getString(VOLUME_ID).toString())
+        subscribe()
+        binding.bookDetailsDescription.movementMethod = ScrollingMovementMethod()
     }
 
-    private fun getDataFromRequest(volumeId: String) {
-        binding.detailsProgressBar.visibility = View.VISIBLE
-        viewModel.getBookDetails(volumeId)
-        binding.detailsProgressBar.visibility = View.GONE
+    private fun subscribe() {
+        viewModel.imageLinks.observe(viewLifecycleOwner, {
+            Picasso.get().load(it).into(binding.detailsBookView)
+        })
+    }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        arguments?.getString(VOLUME_ID)?.let {
+            viewModel.getBookDetails(it)
+        }
     }
 }

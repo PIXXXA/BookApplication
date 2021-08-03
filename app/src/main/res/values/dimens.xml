@@ -6,6 +6,13 @@
     <dimen name="large_margin">24dp</dimen>
     <dimen name="extra_large_margin">32dp</dimen>
 
+    <!--Texts-->
+    <dimen name="tiny_text_size">8dp</dimen>
+    <dimen name="small_text_size">16dp</dimen>
+    <dimen name="middle_text_size">24dp</dimen>
+    <dimen name="large_text_size">32dp</dimen>
+    <dimen name="extra_large_text_size">40dp</dimen>
+
     <!--Card View-->
     <dimen name="card_view_radius">8dp</dimen>
 
@@ -13,8 +20,12 @@
     <dimen name="view_small_height">3dp</dimen>
 
     <!--Recycler View Height-->
-    <dimen name="recycler_view_height">300dp</dimen>
+    <dimen name="recycler_view_height">225dp</dimen>
 
     <!--Image View Size-->
     <dimen name="image_view_size">150dp</dimen>
+
+    <!-- Edit Text Size-->
+    <dimen name="edit_text_size">40dp</dimen>
+
 </resources>
