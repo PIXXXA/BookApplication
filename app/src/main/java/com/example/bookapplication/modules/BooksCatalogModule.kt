@@ -1,6 +1,6 @@
 package com.example.bookapplication.modules
 
-import com.example.bookapplication.views.fragment.catalog.BooksCatalogViewModel
+import com.example.bookapplication.ui.fragment.catalog.BooksCatalogViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module

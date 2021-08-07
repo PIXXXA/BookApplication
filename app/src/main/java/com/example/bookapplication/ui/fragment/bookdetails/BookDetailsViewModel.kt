@@ -1,4 +1,4 @@
-package com.example.bookapplication.views.fragment.bookdetails
+package com.example.bookapplication.ui.fragment.bookdetails
 
 import android.content.Context
 import android.util.Log

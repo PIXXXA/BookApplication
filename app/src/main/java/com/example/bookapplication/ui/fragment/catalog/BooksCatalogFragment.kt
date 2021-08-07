@@ -1,6 +1,8 @@
-package com.example.bookapplication.views.fragment.catalog
+package com.example.bookapplication.ui.fragment.catalog
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +12,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.bookapplication.R
 import com.example.bookapplication.VOLUME_ID
 import com.example.bookapplication.databinding.FragmentBooksCatalogBinding
-import com.example.bookapplication.hideKeyboard
-import com.example.bookapplication.views.fragment.bookdetails.BookDetailsFragment
-import com.example.bookapplication.views.recyclerview.CatalogAdapter
-import com.example.bookapplication.views.recyclerview.IRecyclerViewCallback
+import com.example.bookapplication.ui.fragment.bookdetails.BookDetailsFragment
+import com.example.bookapplication.ui.recyclerview.CatalogAdapter
+import com.example.bookapplication.ui.recyclerview.callback.IRecyclerViewCallback
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class BooksCatalogFragment : Fragment(), IRecyclerViewCallback {
@@ -36,41 +37,46 @@ class BooksCatalogFragment : Fragment(), IRecyclerViewCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initListeners()
+        initListener()
         createAdapters()
-        createRecyclerViews()
+        sadf()
     }
 
     private fun createAdapters() {
         viewModel.catalog.observe(viewLifecycleOwner, { list ->
             list?.let {
-                binding.freeBookRecyclerView.adapter = CatalogAdapter(
-                    list.filter { item -> item.saleInfo.saleability == FIELD_FREE },
+                val adapter = CatalogAdapter(
+                    list,
                     this
                 )
-                binding.paidBooksRecyclerView.adapter = CatalogAdapter(
-                    list.filter { item -> item.saleInfo.saleability != FIELD_FREE },
-                    this
-                )
+                binding.bookCatalogRecyclerView.adapter = adapter
+                adapter.notifyDataSetChanged()
             }
         })
     }
 
-    private fun createRecyclerViews() {
-        viewModel.catalog.observe(viewLifecycleOwner, {
-            binding.freeBookRecyclerView.layoutManager = GridLayoutManager(this.context, 2)
-            binding.paidBooksRecyclerView.layoutManager = GridLayoutManager(this.context, 2)
-            binding.catalogView.visibility = View.VISIBLE
+    private fun sadf() {
+        viewModel.catalog.observe(viewLifecycleOwner, { list ->
+            binding.bookCatalogRecyclerView.layoutManager = GridLayoutManager(this.context, 2)
             viewModel.progressState.value = false
         })
     }
 
-    private fun initListeners() {
-        binding.searchButton.setOnClickListener {
-            viewModel.progressState.value = true
-            viewModel.getBooksCatalog(binding.searchEditText.text.toString())
-            view?.hideKeyboard()
-        }
+    private fun initListener() {
+        binding.searchEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                //do nothing
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                //do nothing
+            }
+
+            override fun afterTextChanged(editable: Editable) {
+                viewModel.progressState.value = true
+                viewModel.getBooksCatalog(editable.toString())
+            }
+        })
     }
 
     override fun onClickListener(bookId: String) {

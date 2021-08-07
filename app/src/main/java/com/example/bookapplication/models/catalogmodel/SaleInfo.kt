@@ -16,5 +16,5 @@ data class SaleInfo(
     @SerializedName("retailPrice")
     val retailPrice: RetailPriceX,
     @SerializedName("saleability")
-    val saleability: String
+    val saleability: Saleability
 )

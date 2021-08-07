@@ -34,8 +34,8 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="@dimen/middle_margin" />
 
-    <ImageView
-        android:id="@+id/book_image"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/catalog_book_image"
         android:layout_width="@dimen/image_view_size"
         android:layout_height="@dimen/image_view_size"
         app:layout_constraintEnd_toEndOf="@id/right_guideline"
@@ -43,14 +43,14 @@
         app:layout_constraintTop_toTopOf="@id/top_guideline"
         android:contentDescription="@string/edit_text_description" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         style="@style/TitleStyle.Description"
-        android:id="@+id/book_title"
+        android:id="@+id/catalog_book_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="alskdfjlsakjdflkjasdlkfj"
         app:layout_constraintBottom_toBottomOf="@id/bottom_guideline"
         app:layout_constraintEnd_toStartOf="@+id/right_guideline"
         app:layout_constraintStart_toStartOf="@id/left_guideline"
-        app:layout_constraintTop_toBottomOf="@id/book_image" />
+        app:layout_constraintTop_toBottomOf="@id/catalog_book_image" />
 </androidx.constraintlayout.widget.ConstraintLayout>

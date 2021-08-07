@@ -1,4 +1,4 @@
-package com.example.bookapplication.views.recyclerview
+package com.example.bookapplication.ui.recyclerview.callback
 
 interface IRecyclerViewCallback {
     fun onClickListener(bookId: String)

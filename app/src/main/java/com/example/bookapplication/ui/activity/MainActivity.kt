@@ -1,9 +1,9 @@
-package com.example.bookapplication.views.activity
+package com.example.bookapplication.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.bookapplication.R
-import com.example.bookapplication.views.fragment.catalog.BooksCatalogFragment
+import com.example.bookapplication.ui.fragment.catalog.BooksCatalogFragment
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-package com.example.bookapplication.views.fragment.catalog
+package com.example.bookapplication.ui.fragment.catalog
 
 import android.util.Log
 import androidx.lifecycle.LiveData
