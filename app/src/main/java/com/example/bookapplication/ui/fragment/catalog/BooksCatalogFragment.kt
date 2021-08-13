@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.bookapplication.R
 import com.example.bookapplication.VOLUME_ID
 import com.example.bookapplication.databinding.FragmentBooksCatalogBinding
+import com.example.bookapplication.models.catalogmodel.Item
+import com.example.bookapplication.models.catalogmodel.Saleability
+import com.example.bookapplication.models.recyclermodel.RecyclerListModel
 import com.example.bookapplication.ui.fragment.bookdetails.BookDetailsFragment
 import com.example.bookapplication.ui.recyclerview.CatalogAdapter
 import com.example.bookapplication.ui.recyclerview.callback.IRecyclerViewCallback
@@ -39,27 +42,60 @@ class BooksCatalogFragment : Fragment(), IRecyclerViewCallback {
         super.onViewCreated(view, savedInstanceState)
         initListener()
         createAdapters()
-        sadf()
+        configRecyclerLayout()
     }
 
     private fun createAdapters() {
-        viewModel.catalog.observe(viewLifecycleOwner, { list ->
-            list?.let {
-                val adapter = CatalogAdapter(
-                    list,
-                    this
+        viewModel.catalog.observe(viewLifecycleOwner, {
+            val adapter = it?.let { it1 ->
+                CatalogAdapter(
+                    configRecyclerList(it1),
+//                    it.filter { item -> item.saleInfo.saleability == Saleability.FREE }.count(),
+                    this,
                 )
-                binding.bookCatalogRecyclerView.adapter = adapter
-                adapter.notifyDataSetChanged()
             }
+            adapter?.notifyDataSetChanged()
+            binding.bookCatalogRecyclerView.adapter = adapter
         })
     }
 
-    private fun sadf() {
-        viewModel.catalog.observe(viewLifecycleOwner, { list ->
+    private fun configRecyclerLayout() {
+        viewModel.catalog.observe(viewLifecycleOwner, {
             binding.bookCatalogRecyclerView.layoutManager = GridLayoutManager(this.context, 2)
             viewModel.progressState.value = false
         })
+    }
+
+    private fun configRecyclerList(bookList: List<Item>): MutableList<RecyclerListModel> {
+        val sortedBookList = bookList.sortedBy { it.saleInfo.saleability == Saleability.FREE }
+        val recyclerList = mutableListOf<RecyclerListModel>()
+        mutableListOf(
+            context?.getString(
+                R.string.free_books_title
+            )?.let {
+                RecyclerListModel.TitleItem(
+                    it
+                )
+            },
+            context?.getString(
+                R.string.paid_books_title
+            )?.let {
+                RecyclerListModel.TitleItem(
+                    it
+                )
+            },
+        )
+        sortedBookList.forEach { it ->
+            recyclerList.add(
+                RecyclerListModel.BookItem(
+                    it.volumeInfo.title,
+                    it.volumeInfo.imageLinks.thumbnail,
+                    it.id
+                )
+            )
+        }
+        recyclerList.add(RecyclerListModel.DividerItem())
+        return recyclerList
     }
 
     private fun initListener() {
@@ -88,10 +124,5 @@ class BooksCatalogFragment : Fragment(), IRecyclerViewCallback {
             ?.replace(R.id.fragment_container_view, fragment)
             ?.addToBackStack(null)
             ?.commit()
-    }
-
-    companion object {
-
-        const val FIELD_FREE = "FREE"
     }
 }

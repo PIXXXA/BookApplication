@@ -74,7 +74,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/book_catalog_recycler_view"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="@dimen/small_margin"
             app:layout_constraintBottom_toBottomOf="@id/bottom_guideline"
             app:layout_constraintEnd_toEndOf="@id/right_guideline"

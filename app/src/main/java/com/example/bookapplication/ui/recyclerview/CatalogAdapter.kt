@@ -4,55 +4,58 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookapplication.R
-import com.example.bookapplication.databinding.CatalogViewBinding
-import com.example.bookapplication.models.catalogmodel.Item
-import com.example.bookapplication.models.catalogmodel.Saleability
+import com.example.bookapplication.databinding.RecyclerViewBookItemBinding
+import com.example.bookapplication.databinding.RecyclerViewDividerItemBinding
+import com.example.bookapplication.databinding.RecyclerViewTitleItemBinding
+import com.example.bookapplication.models.recyclermodel.RecyclerListModel
 import com.example.bookapplication.ui.recyclerview.callback.IRecyclerViewCallback
-import com.example.bookapplication.ui.recyclerview.viewholder.CatalogViewHolder
-import com.example.bookapplication.ui.recyclerview.viewholder.FreeCatalogViewHolder
-import com.example.bookapplication.ui.recyclerview.viewholder.PaidCatalogViewHolder
+import com.example.bookapplication.ui.recyclerview.viewholder.BaseViewHolder
+import com.example.bookapplication.ui.recyclerview.viewholder.BookViewHolder
+import com.example.bookapplication.ui.recyclerview.viewholder.DividerViewHolder
+import com.example.bookapplication.ui.recyclerview.viewholder.TitleViewHolder
 
-class CatalogAdapter(private val model: List<Item>, private val callback: IRecyclerViewCallback) :
-    RecyclerView.Adapter<CatalogViewHolder>() {
+class CatalogAdapter(
+    private val model: List<RecyclerListModel>,
+    private val callback: IRecyclerViewCallback
+) : RecyclerView.Adapter<BaseViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatalogViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.catalog_view, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return when (viewType) {
-            Saleability.FREE.ordinal -> {
-                FreeCatalogViewHolder(
-                    CatalogViewBinding.bind(view)
-                )
+            0 -> {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.recycler_view_book_item, parent, false)
+                BookViewHolder(RecyclerViewBookItemBinding.bind(view))
+            }
+            1 -> {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.recycler_view_title_item, parent, false)
+                TitleViewHolder(RecyclerViewTitleItemBinding.bind(view))
             }
             else -> {
-                PaidCatalogViewHolder(
-                    CatalogViewBinding.bind(view)
-                )
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.recycler_view_book_item, parent, false)
+                DividerViewHolder(RecyclerViewDividerItemBinding.bind(view))
             }
         }
     }
 
     override fun getItemCount(): Int = model.size
 
-    override fun getItemViewType(position: Int): Int =
-        model[position].saleInfo.saleability.ordinal
-
-    override fun onBindViewHolder(holder: CatalogViewHolder, position: Int) {
-        holder.populate(getModel(holder))
-        onClick(holder, model[position].id)
-    }
-
-    private fun getModel(holder: CatalogViewHolder): List<Item> {
-        return if (holder is FreeCatalogViewHolder) {
-            model.filter { item -> item.saleInfo.saleability == Saleability.FREE }
-        } else {
-            model.filter { item -> item.saleInfo.saleability != Saleability.FREE }
+    override fun getItemViewType(position: Int): Int {
+        return when (model[position]) {
+            is RecyclerListModel.BookItem -> 0
+            is RecyclerListModel.TitleItem -> 1
+            is RecyclerListModel.DividerItem -> 2
         }
     }
 
-    private fun onClick(holder: CatalogViewHolder, bookId: String) {
-        holder.itemView.setOnClickListener {
-            callback.onClickListener(bookId)
-        }
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+        holder.populate(model[position])
     }
+
+//    private fun onClick(holder: BookViewHolder, bookId: String) {
+//        holder.itemView.setOnClickListener {
+//            callback.onClickListener(bookId)
+//        }
+//    }
 }
